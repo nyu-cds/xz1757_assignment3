@@ -12,6 +12,7 @@ Version_2 Improvement: Using alternatives to membership testing of lists
 Improvement detail: change list to set at Line 81 and Line 108   
 Version_2 script execution time: 1m41.464s   
 Comparing with original version, Relative Speedup (R): 1.059   
+Improvement ranking: 3rd   
 <h1></h1>
 Version_3 Improvement: Using local rather than global variables   
 Version_3 script execution time: 1m42.002s   
