@@ -4,8 +4,8 @@
 """
 '''
 Version_opt Improvement: combine all the improvement made by version_1 to version_4
-Version_opt script execution time: 
-Comparing with original version, Relative Speedup (R): 
+Version_opt script execution time: 0m31.287s
+Comparing with original version, Relative Speedup (R): 3.436 
 
 '''
 
