@@ -88,6 +88,21 @@ def nbody(loops, reference, iterations):
         reference - body at center of system
         iterations - number of timesteps to advance
     '''
+
+    key_pairs, body_names = find_pairs(BODIES)
+
+    # Set up global state
+    offset_momentum(BODIES[reference],BODIES, body_names)
+
+    for _ in range(loops):
+        report_energy(BODIES, key_pairs, body_names, e=0.0)
+        for _ in range(iterations):
+            advance(0.01, BODIES, key_pairs,body_names)
+        print(report_energy(BODIES, key_pairs,body_names, e=0.0))
+
+if __name__ == '__main__':
+    import itertools
+    
     PI = 3.14159265358979323
     SOLAR_MASS = 4 * PI * PI
     DAYS_PER_YEAR = 365.24
@@ -127,18 +142,5 @@ def nbody(loops, reference, iterations):
                      -9.51592254519715870e-05 * DAYS_PER_YEAR],
                     5.15138902046611451e-05 * SOLAR_MASS)}
 
-    key_pairs, body_names = find_pairs(BODIES)
-
-    # Set up global state
-    offset_momentum(BODIES[reference],BODIES, body_names)
-
-    for _ in range(loops):
-        report_energy(BODIES, key_pairs, body_names, e=0.0)
-        for _ in range(iterations):
-            advance(0.01, BODIES, key_pairs,body_names)
-        print(report_energy(BODIES, key_pairs,body_names, e=0.0))
-
-if __name__ == '__main__':
-    import itertools
     nbody(100, 'sun', 20000)
 
