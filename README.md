@@ -27,3 +27,6 @@ Improvement ranking: 2nd
 Version_opt Improvement: combine all the improvement made by version_1 to version_4   
 Version_opt script execution time: 0m31.287s   
 Comparing with original version, Relative Speedup (R): 3.436   
+<h1></h1>
+Version_opt script after code review, execution time: 0m28.863s
+Comparing with original version, Relative Speedup (R): 3.725
