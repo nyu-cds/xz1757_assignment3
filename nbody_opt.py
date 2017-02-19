@@ -16,9 +16,10 @@ def find_pairs(BODIES):
         if x[1] != x[0]:
             key_pairs.add(x)
     key_pairs = set((a, b) if a <= b else (b, a) for a, b in key_pairs)
-    return key_pairs 
+    body_names = BODIES.keys()
+    return key_pairs, body_names
 
-def advance(dt, BODIES, key_pairs):
+def advance(dt, BODIES, key_pairs,body_names):
     '''
         advance the system one timestep
     '''
@@ -26,7 +27,6 @@ def advance(dt, BODIES, key_pairs):
         ([x1, y1, z1], v1, m1) = BODIES[body1]
         ([x2, y2, z2], v2, m2) = BODIES[body2]
 
-        # remove function call and update it 
         dx, dy, dz = (x1-x2, y1-y2, z1-z2)
 
         mag = dt * ((dx * dx + dy * dy + dz * dz) ** (-1.5))
@@ -41,14 +41,14 @@ def advance(dt, BODIES, key_pairs):
         v2[1] += dy * b1
         v2[2] += dz * b1
         
-    for body in BODIES.keys():
+    for body in body_names:
         (r, [vx, vy, vz], m) = BODIES[body]
         r[0] += dt * vx
         r[1] += dt * vy
         r[2] += dt * vz
 
 
-def report_energy(BODIES, key_pairs, e):
+def report_energy(BODIES, key_pairs, body_names, e):
     '''
         compute the energy and return it so that it can be printed
     '''
@@ -58,18 +58,18 @@ def report_energy(BODIES, key_pairs, e):
         (dx, dy, dz) = (x1-x2, y1-y2, z1-z2)
         e -= (m1 * m2) / ((dx * dx + dy * dy + dz * dz) ** 0.5)
         
-    for body in BODIES.keys():
+    for body in body_names:
         (r, [vx, vy, vz], m) = BODIES[body]
         e += m * (vx * vx + vy * vy + vz * vz) / 2.
         
     return e
 
-def offset_momentum(ref, BODIES, px=0.0, py=0.0, pz=0.0):
+def offset_momentum(ref, BODIES, body_names, px=0.0, py=0.0, pz=0.0):
     '''
         ref is the body in the center of the system
         offset values from this reference
     '''
-    for body in BODIES.keys():
+    for body in body_names:
         (r, [vx, vy, vz], m) = BODIES[body]
         px -= vx * m
         py -= vy * m
@@ -127,16 +127,16 @@ def nbody(loops, reference, iterations):
                      -9.51592254519715870e-05 * DAYS_PER_YEAR],
                     5.15138902046611451e-05 * SOLAR_MASS)}
 
-    key_pairs = find_pairs(BODIES)
+    key_pairs, body_names = find_pairs(BODIES)
 
     # Set up global state
-    offset_momentum(BODIES[reference],BODIES)
+    offset_momentum(BODIES[reference],BODIES, body_names)
 
     for _ in range(loops):
-        report_energy(BODIES, key_pairs, e=0.0)
+        report_energy(BODIES, key_pairs, body_names, e=0.0)
         for _ in range(iterations):
-            advance(0.01, BODIES, key_pairs)
-        print(report_energy(BODIES, key_pairs, e=0.0))
+            advance(0.01, BODIES, key_pairs,body_names)
+        print(report_energy(BODIES, key_pairs,body_names, e=0.0))
 
 if __name__ == '__main__':
     import itertools
