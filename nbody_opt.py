@@ -8,7 +8,10 @@ Version_opt script execution time: 0m31.287s
 Comparing with original version, Relative Speedup (R): 3.436 
 
 '''
-
+'''
+Version_opt script after code review, execution time: 0m28.863s
+Comparing with original version, Relative Speedup (R): 3.725
+'''
 
 def find_pairs(BODIES):
     key_pairs = set()
