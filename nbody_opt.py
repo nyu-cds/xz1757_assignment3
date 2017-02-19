@@ -19,33 +19,35 @@ def find_pairs(BODIES):
     body_names = BODIES.keys()
     return key_pairs, body_names
 
-def advance(dt, BODIES, key_pairs,body_names):
+def advance(dt, BODIES, key_pairs,body_names, iterations):
     '''
         advance the system one timestep
     '''
-    for (body1, body2) in key_pairs:
-        ([x1, y1, z1], v1, m1) = BODIES[body1]
-        ([x2, y2, z2], v2, m2) = BODIES[body2]
+    for _ in range(iterations):
 
-        dx, dy, dz = (x1-x2, y1-y2, z1-z2)
+	    for (body1, body2) in key_pairs:
+	        ([x1, y1, z1], v1, m1) = BODIES[body1]
+	        ([x2, y2, z2], v2, m2) = BODIES[body2]
 
-        mag = dt * ((dx * dx + dy * dy + dz * dz) ** (-1.5))
+	        dx, dy, dz = (x1-x2, y1-y2, z1-z2)
 
-        b1 = m1 * mag
-        b2 = m2 * mag
+	        mag = dt * ((dx * dx + dy * dy + dz * dz) ** (-1.5))
 
-        v1[0] -= dx * b2
-        v1[1] -= dy * b2
-        v1[2] -= dz * b2
-        v2[0] += dx * b1
-        v2[1] += dy * b1
-        v2[2] += dz * b1
-        
-    for body in body_names:
-        (r, [vx, vy, vz], m) = BODIES[body]
-        r[0] += dt * vx
-        r[1] += dt * vy
-        r[2] += dt * vz
+	        b1 = m1 * mag
+	        b2 = m2 * mag
+
+	        v1[0] -= dx * b2
+	        v1[1] -= dy * b2
+	        v1[2] -= dz * b2
+	        v2[0] += dx * b1
+	        v2[1] += dy * b1
+	        v2[2] += dz * b1
+	        
+	    for body in body_names:
+	        (r, [vx, vy, vz], m) = BODIES[body]
+	        r[0] += dt * vx
+	        r[1] += dt * vy
+	        r[2] += dt * vz
 
 
 def report_energy(BODIES, key_pairs, body_names, e):
@@ -95,14 +97,12 @@ def nbody(loops, reference, iterations):
     offset_momentum(BODIES[reference],BODIES, body_names)
 
     for _ in range(loops):
-        report_energy(BODIES, key_pairs, body_names, e=0.0)
-        for _ in range(iterations):
-            advance(0.01, BODIES, key_pairs,body_names)
+        advance(0.01, BODIES, key_pairs,body_names, iterations)
         print(report_energy(BODIES, key_pairs,body_names, e=0.0))
 
 if __name__ == '__main__':
     import itertools
-    
+
     PI = 3.14159265358979323
     SOLAR_MASS = 4 * PI * PI
     DAYS_PER_YEAR = 365.24
