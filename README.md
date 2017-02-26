@@ -1,5 +1,6 @@
 # xz1757_assignment3
-Student: Xinsheng Zhang (xz1757)
+Student: Xinsheng Zhang (xz1757)   
+Reviewer: yx1350, dov205
 <h1></h1>
 Original script execution time: 1m39.423s
 <h1></h1>
@@ -27,3 +28,6 @@ Improvement ranking: 2nd
 Version_opt Improvement: combine all the improvement made by version_1 to version_4   
 Version_opt script execution time: 0m31.287s   
 Comparing with original version, Relative Speedup (R): 3.436   
+<h1></h1>
+Version_opt script after code review, execution time: 0m28.863s   
+Comparing with original version, Relative Speedup (R): 3.725
